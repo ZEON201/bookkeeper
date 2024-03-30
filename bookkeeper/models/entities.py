@@ -15,8 +15,8 @@ class Category(db.Entity):
 class Expense(db.Entity):
     id = PrimaryKey(int, auto=True)
     amount = Required(float)
-    expense_date = Required(date)
-    added_date = Required(date)
+    expense_date = Required(date, default=date.today())
+    added_date = Required(date, default=date.today())
     comment = Optional(str)
     category = Required(Category)
 
