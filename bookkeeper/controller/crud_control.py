@@ -1,3 +1,7 @@
+from os import path
+
+from pkg_resources import require
+
 from bookkeeper.models.entities import db
 import bookkeeper.controller.query_helper as qh
 
@@ -5,7 +9,8 @@ import bookkeeper.controller.query_helper as qh
 class CrudController:
     def __init__(self):
         try:
-            db.bind(provider='sqlite', filename='../database.sqlite', create_db=True)  # TODO: Move DB file name to config / dotenv
+            db.bind(provider='sqlite', filename='../../config/database.sqlite', create_db=True)
+            require('dotenv').config({path: __dirname + '/.env'})
             db.generate_mapping(create_tables=True)
         except Exception as e:
             print(e)
