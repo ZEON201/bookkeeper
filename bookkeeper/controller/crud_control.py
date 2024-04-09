@@ -1,6 +1,5 @@
 from os import path
 
-from pkg_resources import require
 
 from bookkeeper.models.entities import db
 import bookkeeper.controller.query_helper as qh
@@ -10,12 +9,11 @@ class CrudController:
     def __init__(self):
         try:
             db.bind(provider='sqlite', filename='../../config/database.sqlite', create_db=True)
-            require('dotenv').config({path: __dirname + '/.env'})
             db.generate_mapping(create_tables=True)
         except Exception as e:
             print(e)
 
-    def create(self, entity, params):
+    def create(self, entity, params = any):
         if entity == 'Budget':
             qh.add_budget(monthly=params['monthly'], weekly=params['weekly'],
                           daily=params['daily'])
@@ -23,7 +21,7 @@ class CrudController:
 
         raise NotImplementedError(f'Добавление для сущности {entity} не реализовано!')
 
-    def read(self, entity, params=any):
+    def read(self, entity, params = any):
         if entity == 'Budget':
             return qh.get_budget()
         if entity == 'Category':
@@ -31,7 +29,7 @@ class CrudController:
 
         raise NotImplementedError(f'Чтение для сущности {entity} не реализовано!')
 
-    def update(self, entity, params):
+    def update(self, entity, params = any):
         if entity == 'Budget':  # For Budget, update is the same as create
             qh.add_budget(monthly=params['monthly'], weekly=params['weekly'],
                           daily=params['daily'])

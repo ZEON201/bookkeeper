@@ -28,3 +28,14 @@ def get_category():
         return tuple(" > ".join(cat) for cat in cats)
     except Exception as e:
         print(e)
+@db_session
+def add_category(name, locations):
+    loc_entities = []
+    for l in locations:
+        try:
+            cat = Category[l]
+        except db_session.core.ObjectNotFound:
+            cat = Category(name=l)
+        else:
+            loc_entities.append(cat)
+    cat = Category(name=name, locations=loc_entities)

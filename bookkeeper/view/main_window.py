@@ -7,7 +7,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.controller = None
+        self.controller = any
         self.setWindowTitle("Программа для ведения бюджета")
         self.setFixedSize(300, 350)
 
@@ -68,9 +68,9 @@ class MainWindow(QMainWindow):
         self.budget_daily.setText('Бюджет на день: ' + str(bdgt[2]))
 
     def on_budget_button_click(self):
-        self.controller.update('Budget', {'monthly': float(self.edit_budget_monthly.text()),
-                                          'weekly': float(self.edit_budget_weekly.text()),
-                                          'daily': float(self.edit_budget_daily.text())})
+        self.controller.update('Budget', {'monthly': str(self.edit_budget_monthly.text()),
+                                          'weekly': str(self.edit_budget_weekly.text()),
+                                          'daily': str(self.edit_budget_daily.text())})
         self.refresh_budgets()
 
     def refresh_categories(self):
